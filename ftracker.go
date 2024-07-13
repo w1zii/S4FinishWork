@@ -59,7 +59,7 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Плавание":
 		distance := float64(lengthPool) * float64(countPool) / mInKm
-		speed := meanSpeed(action, duration)
+		speed := meanSpeed(lengthPool, duration)
 		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	default:
@@ -101,7 +101,7 @@ const (
 // height float64 — рост пользователя.
 func WalkingSpentCalories(action int, duration, weight, height float64) float64 {
 	// ваш код здесь
-	return walkingCaloriesWeightMultiplier*weight + math.Pow(meanSpeed(action, duration), 2)/height/cmInM*walkingSpeedHeightMultiplier*weight*duration*minInH
+	return walkingCaloriesWeightMultiplier*weight + (math.Pow(meanSpeed(action, duration), 2)/height/cmInM)*walkingSpeedHeightMultiplier*weight*duration*minInH
 }
 
 // Константы для расчета калорий, расходуемых при плавании.
