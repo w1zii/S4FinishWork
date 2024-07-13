@@ -55,11 +55,11 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 	case trainingType == "Ходьба":
 		distance := distance(action)
 		speed := meanSpeed(action, duration)
-		calories := WalkingSpentCalories(action, weight, height/cmInM, duration)
+		calories := WalkingSpentCalories(action, weight, height, duration)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Плавание":
 		distance := float64(lengthPool) * float64(countPool) / mInKm
-		speed := meanSpeed(action, duration)
+		speed := meanSpeed(lengthPool, countPool, duration)
 		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	default:
