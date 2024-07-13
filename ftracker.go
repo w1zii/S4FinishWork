@@ -45,22 +45,21 @@ func meanSpeed(action int, duration float64) float64 {
 // trainingType string — вид тренировки(Бег, Ходьба, Плавание).
 // duration float64 — длительность тренировки в часах.
 func ShowTrainingInfo(action int, trainingType string, duration, weight, height float64, lengthPool, countPool int) string {
-	// ваш код здесь
-	switch {
+		switch {
 	case trainingType == "Бег":
-		distance := distance(action)                               // вызовите здесь необходимую функцию
-		speed := meanSpeed(action, duration)                       // вызовите здесь необходимую функцию
-		calories := RunningSpentCalories(action, weight, duration) // вызовите здесь необходимую функцию
+		distance := distance(action)                               
+		speed := meanSpeed(action, duration)                       
+		calories := RunningSpentCalories(action, weight, duration) 
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Ходьба":
-		distance := distance(action)                                       // вызовите здесь необходимую функцию
-		speed := meanSpeed(action, duration)                               // вызовите здесь необходимую функцию
-		calories := WalkingSpentCalories(action, weight, height, duration) // вызовите здесь необходимую функцию
+		distance := distance(action)                                       
+		speed := meanSpeed(action, duration)                               
+		calories := WalkingSpentCalories(action, weight, height, duration) 
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Плавание":
-		distance := float64(lengthPool) * float64(countPool) / mInKm // вызовите здесь необходимую функцию
-		speed := meanSpeed(action, duration)                         // вызовите здесь необходимую функцию
-		calories := SwimmingSpentCalories(action, weight, duration)  // вызовите здесь необходимую функцию
+		distance := float64(lengthPool) * float64(countPool) / mInKm 
+		speed := meanSpeed(action, duration)                         
+		calories := SwimmingSpentCalories(action, weight, duration)  /
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	default:
 		return "неизвестный тип тренировки"
@@ -81,7 +80,6 @@ const (
 // weight float64 — вес пользователя.
 // duration float64 — длительность тренировки в часах.
 func RunningSpentCalories(action int, weight, duration float64) float64 {
-	// ваш код здесь
 	return runningCaloriesMeanSpeedMultiplier * meanSpeed(action, duration) * runningCaloriesMeanSpeedShift * weight / mInKm * duration * minInH
 }
 
@@ -100,8 +98,7 @@ const (
 // weight float64 — вес пользователя.
 // height float64 — рост пользователя.
 func WalkingSpentCalories(action int, duration, weight, height float64) float64 {
-	// ваш код здесь
-	return walkingCaloriesWeightMultiplier*weight + math.Pow(speed, 2)/height*walkingSpeedHeightMultiplier*weight*duration*minInH
+	return walkingCaloriesWeightMultiplier*weight + math.Pow(meanSpeed(action, duration), 2)/height*walkingSpeedHeightMultiplier*weight*duration*minInH
 }
 
 // Константы для расчета калорий, расходуемых при плавании.
@@ -133,6 +130,5 @@ func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 // duration float64 — длительность тренировки в часах.
 // weight float64 — вес пользователя.
 func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) float64 {
-	// ваш код здесь
-	return (swimmingMeanSpeed(action, duration) + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
+	return (swimmingMeanSpeed(lengthPool, countPool, duration) + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
 }
